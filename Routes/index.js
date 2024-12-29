@@ -1,5 +1,5 @@
 
-const CategoryRoute = require('./categoryRoute');
+const categoryRoute = require('./categoryRoute');
 const subCategoryRoute = require('./subCategoreRoute');
 const brandRoute = require('./brandRoute');
 const productRoute = require('./productRoute');
@@ -16,7 +16,7 @@ const orderRoute = require('./orderRoute')
 
 
 const mountRoutes = (app) => {
-    app.use('/api/v1/categories', CategoryRoute);
+    app.use('/api/v1/categories', categoryRoute);
     app.use('/api/v1/subcategories', subCategoryRoute);
     app.use('/api/v1/brands', brandRoute);
     app.use('/api/v1/products', productRoute);
