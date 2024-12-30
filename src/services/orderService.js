@@ -6,10 +6,11 @@ const Cart = require('../models/cartModel');
 const Product = require('../models/productModel');
 const Order = require('../models/orderModel');
 
-
-// @desc    create cash order
-// @route   Post /api/v1/orders/cartId
-// @access  Protected/ User
+/**
+ * @desc    create cash order
+ * @route   Post /api/v1/orders/cartId
+ * @access  Protected/ User
+ */
 exports.createCashOrder = asyncHandler(async (req, res, next) => {
     // app settings
     const taxPrice = 0;
@@ -55,19 +56,23 @@ exports.filterOrderForLoggedUser = asyncHandler(async(req, res, next) => {
     if(req.user.role === "user") req.filterObj = { user: req.user._id };
     next();
 })
-// @desc    Get all orders
-// @route   Get /api/v1/orders
-// @access  Protected/ User-Admin-manager
+/**
+ * @desc    Get all orders
+ * @route   Get /api/v1/orders
+ * @access  Protected/ User-Admin-manager
+ */
 exports.findAllOrders = factory.getAll(Order);
-
-// @desc    Get specific orders
-// @route   Get /api/v1/orders/:id
-// @access  Protected/ User-Admin-manager
+/**
+ * @desc    Get specific orders
+ * @route   Get /api/v1/orders/:id
+ * @access  Protected/ User-Admin-manager
+ */
 exports.findSpecificOrder = factory.getOne(Order);
-
-// @desc    update order paid status to paid
-// @route   Put /api/v1/orders/:id/pay
-// @access  Protected/ Admin-manager
+/**
+ * @desc    update order paid status to paid
+ * @route   Put /api/v1/orders/:id/pay
+ * @access  Protected/ Admin-manager
+ */
 exports.updateOrderToPaid = asyncHandler(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
     if (!order) {
@@ -82,10 +87,11 @@ exports.updateOrderToPaid = asyncHandler(async (req, res, next) => {
     const updatedOrder = await order.save();
     res.status(200).json({ status: 'success', data: updatedOrder });
 });
-
-// @desc    update order delivered status
-// @route   Put /api/v1/orders/:deliver
-// @access  Protected/ Admin-manager
+/**
+ * @desc    update order delivered status
+ * @route   Put /api/v1/orders/:deliver
+ * @access  Protected/ Admin-manager
+ */
 exports.updateOrderToDelivered = asyncHandler(async (req, res, next) => {
     const order = await Order.findById(req.params.id);
     if (!order) {
@@ -100,16 +106,17 @@ exports.updateOrderToDelivered = asyncHandler(async (req, res, next) => {
     const updatedOrder = await order.save();
     res.status(200).json({ status: 'success', data: updatedOrder });
 });
-
-// @desc    Get check out session from stripe and sent it as response
-// @route   Get /api/v1/orders/checkout-session/cartId
-// @access  Protected/ User
+/**
+ * @desc    Get check out session from stripe and sent it as response
+ * @route   Get /api/v1/orders/checkout-session/cartId
+ * @access  Protected/ User
+ */
 exports.checkoutSession = asyncHandler(async (req, res, next) => {
-    // app settings
+    //* app settings
   const taxPrice = 0;
   const shippingPrice = 0;
 
-  // 1) Get cart depend on cartId
+  //TODO 1) Get cart depend on cartId
   const cart = await Cart.findById(req.params.cartId);
   if (!cart) {
     return next(
@@ -117,14 +124,14 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     );
   }
 
-  // 2) Get order price depend on cart price "Check if coupon apply"
+  //TODO 2) Get order price depend on cart price "Check if coupon apply"
   const cartPrice = cart.totalPriceAfterDiscount
     ? cart.totalPriceAfterDiscount
     : cart.totalCartPrice;
 
   const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
 
-  // 3) Create stripe checkout session
+  //TODO 3) Create stripe checkout session
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
@@ -144,6 +151,6 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     metadata: req.body.shippingAddress,
   });
 
-  // 4) send session to response
+  //TODO 4) send session to response
   res.status(200).json({ status: 'success', session });
 });

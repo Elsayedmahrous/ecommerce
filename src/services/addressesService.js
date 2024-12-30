@@ -1,13 +1,13 @@
 const asyncHandler = require('express-async-handler');
 
 const User = require('../models/userModel');
-
-// @desc   Add address to user addresses list
-// @route  Post /api/v1/addresses
-//@access Private/user
+/**
+ * @desc   Add address to user addresses list
+ * @route  Post /api/v1/addresses
+ * @access Private/user
+ */
 exports.addAddress = asyncHandler(async (req, res, next) => {
-    // $addToSet ==> add address object to user addresses array if address not exist
-
+    //? $addToSet ==> add address object to user addresses array if address not exist
     const user = await User.findByIdAndUpdate(req.user._id, {
         $addToSet: { addresses: req.body }
     },
@@ -19,12 +19,13 @@ exports.addAddress = asyncHandler(async (req, res, next) => {
         date: user.addresses,
     });
 });
-
-// @desc   Remove address from user addresses list
-// @route  Post /api/v1/addresses
-//@access Private/user
+/**
+ * @desc   Remove address from user addresses list
+ * @route  Post /api/v1/addresses
+ * @access Private/user
+ */
 exports.removeAddress = asyncHandler(async (req, res, next) => {
-    // $pull ==> add address from user addresses array if addressId exist
+    //* $pull ==> add address from user addresses array if addressId exist
     
     const user = await User.findByIdAndUpdate(req.user._id, {
         $pull: { addresses: { _id: req.params.addressId } },
@@ -38,9 +39,11 @@ exports.removeAddress = asyncHandler(async (req, res, next) => {
     });
 });
 
-// @desc   Get logged user addresses
-// @route  Get /api/v1/addresses
-//@access Private/user
+/**
+ * @desc   Get logged user addresses
+ * @route  Get /api/v1/addresses
+ * @access Private/user
+ */
 exports.getLoggedUserAddresses = asyncHandler(async (req, res, next) => {
     const user = await User.findById(req.user._id).populate('addresses');
 

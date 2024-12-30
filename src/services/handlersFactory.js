@@ -1,8 +1,6 @@
 const asyncHandler = require('express-async-handler');
 const ApiError = require('../utils/apiError');
 const ApiFeatures = require('../utils/apiFeatures');
-const { Model } = require('mongoose');
-
 
 exports.deleteOne = (Model) =>
   asyncHandler(async (req, res, next) => {
@@ -12,23 +10,23 @@ exports.deleteOne = (Model) =>
       if (!document) {
          return next(new ApiError(`No document for this id${id}`, 404));
       }
-      // Trigger "remove" event when update document
+      //* Trigger "remove" event when update document
       document.deleteOne() 
       res.status(204).send();
   });
 
 exports.updateOne = (Model) =>
-    asyncHandler(async (req, res, next) => {
+  asyncHandler(async (req, res, next) => {
         const document = await Model.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         });
         if (!document) {
             return next(new ApiError(`No Document for this id${req.params.id}`, 404));
         }
-        // Trigger "save" event when update document
+        //* Trigger "save" event when update document
         document.save()
         res.status(200).json({ data: document });
-    });
+});
 
 exports.createOne = (Model) => asyncHandler( async (req, res) => {
     const newDoc = await Model.create(req.body)
@@ -38,12 +36,12 @@ exports.createOne = (Model) => asyncHandler( async (req, res) => {
 
 exports.getOne = (Model,populationOpt) => asyncHandler(async (req, res , next) => {
     const { id } = req.params;
-    // 1) Build query
+    //TODO 1) Build query
     let query = Model.findById(id);
     if (populationOpt) {
         query = query.populate(populationOpt)
     };
-    // 2) Execute query
+    //TODO 2) Execute query
     const document = await query
     if (!document) {
       return  next(new ApiError(`No getOneDoc for this id${id}`,404))

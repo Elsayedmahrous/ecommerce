@@ -15,7 +15,7 @@ const {
 
 const authService = require('../services/authService');
 
-const subcategoriesRoute = require('./subCategoreRoute')
+const subcategoriesRoute = require('./subCategoryRoute')
 const router = express.Router();
 // nested route
 router.use("/:categoryId/subcategories", subcategoriesRoute);

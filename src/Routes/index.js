@@ -1,6 +1,5 @@
-
 const categoryRoute = require('./categoryRoute');
-const subCategoryRoute = require('./subCategoreRoute');
+const subCategoryRoute = require('./subCategoryRoute');
 const brandRoute = require('./brandRoute');
 const productRoute = require('./productRoute');
 const userRoute = require('./userRoute');
@@ -11,9 +10,6 @@ const addressesRoute = require('./addressRoute');
 const couponRoute = require('./couponRoute');
 const cartRoute = require('./cartRoute')
 const orderRoute = require('./orderRoute')
-
-
-
 
 const mountRoutes = (app) => {
     app.use('/api/v1/categories', categoryRoute);

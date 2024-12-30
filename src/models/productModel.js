@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const productSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -68,9 +67,9 @@ const productSchema = new mongoose.Schema({
 }
     , {
         timestamps: true,
-        // to enable virtual populate.
-        toJSON: { virtuals: true },
-        toObject: { virtuals: true},
+        //* to enable virtual populate.
+        toJSON: { virtual: true },
+        toObject: { virtual: true},
     }
 );
 

@@ -1,6 +1,6 @@
 const slugify = require('slugify');
 const { check } = require('express-validator');
-const validatorMiddleware = require("../../middlewera/vaildationMiddleware");
+const validatorMiddleware = require("../../middleware/vaildationMiddleware");
 const User = require('../../models/userModel');
 
 //@desc    Signup

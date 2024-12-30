@@ -3,7 +3,7 @@ const { check, body } = require('express-validator');
 const Category = require('../../models/categoryModel');
 const SubCategory = require('../../models/subcategoryModel')
 
-const validatorMiddleware = require('../../middlewera/vaildationMiddleware');
+const validatorMiddleware = require('../../middleware/vaildationMiddleware');
 
 exports.createProductValidator = [
     check('title')

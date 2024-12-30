@@ -34,4 +34,3 @@ brandSchema.post('save', (doc) => {
   
 module.exports = mongoose.model('Brand', brandSchema);
  
-  
